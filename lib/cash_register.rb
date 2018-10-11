@@ -1,54 +1,54 @@
-
 require "pry"
 class CashRegister
 
+attr_accessor :total, :items, :discount, :last_transaction
+attr_reader
 
+@@items = []
 
-attr_accessor :total, :items, :discount
-attr_reader :final_transaction
+# @@total = 0
+    def initialize(discount = nil )
+      @total = 0
+      @discount = discount #might have this wrong?
+      @items = []
+    end
 
-def initialize(discount = 0)
-  @total = 0
-  @discount = discount
-  @items = []
-end
+  #optional quantity
+  #need to get the total price from item and it's quantity.
+  # quantity x price will be added to total.
+  # 4 milk jugs at $5.00 = 20
+  #returns THE TOTAL AMOUNT OF @TOTAL.
+    def add_item(item, price, quantity = 1)
+    @total += price * quantity
+    quantity.times do
+    @@items << item
+    @items << item
+    end
+      @last_transaction = price * quantity
+    def items
+      @items
+    end
 
+    # def self.total
+    #   @@total
+    # end
 
-
-def add_item(title, price, c = 1)
-if c > 1
-  p = @items.length
-  p == 1
-  @items.fill(title, p..c)
-  @total = @total += price * c
-else
-  items << title
- @total = @total += price * c
- @final_transaction = price
-end
-#I must add this to the array three times equal to the spec file .
-#itmes.push
-
-end
-def apply_discount
-  if @total == 0
-    return "There is no discount to apply."
-else
-  @total = @total - (@total * 0.2)
-return "After the discount, the total comes to $#{@total.to_i}."
-end
-
-
-end
-
-
-def self.items
-#find only the items our user has added.
-@items
+      #apply the optional discount to the @total .
+      #subtract discount from total
+      def apply_discount
+    if @discount
+      percent = @discount.to_f / 100
+      @total -= @total * percent
+      "After the discount, the total comes to $#{@total.to_i}."
+    else
+      "There is no discount to apply."
+    end
+  end
 end
 
 def void_last_transaction
-@total -= @final_transaction
+  @total -= last_transaction
+
 end
 
 
